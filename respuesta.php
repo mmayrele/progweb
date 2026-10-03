@@ -35,7 +35,6 @@
     for($a = 0; $a < $hijos; $a++){
         print "<p>Hijo: " . ($a + 1) . "</p>";        
     }
-    
 }
 
 ?>
