@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mi página</title>
+        <link type="text/css" rel="stylesheet" href="style/style.css"> 
+        <script src="js/script.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function() { 
+                //buscar productso
+                fetch("http://127.0.0.1/uasd/prog/index.php?action=getProducts")
+                .then(res => res.json())
+                .then(objs => {
+                    //console.table(objs);
+                    objs.forEach(function(obj){
+                        const listProducts = document.getElementById("listProducts");
+                        const card = document.createElement("div");
+                        card.classList.add("card");
+
+                        const img = document.createElement("img");
+                        img.src = "img/card.jpg";
+                        img.alt = "Imagen de la tarjeta";
+
+                        const cardContent = document.createElement("div");
+                        cardContent.classList.add("card-content");
+
+                        const h2 = document.createElement("h2");
+                        h2.textContent = obj.nombre;
+
+                        const b = document.createElement("b");
+                        b.textContent = "Código: " + obj.codigo;
+
+                        const p = document.createElement("p");
+                        p.textContent = "Tipo: " + (obj.tipo === 1 ? "Venta" : "Servicio");
+                        
+                        const costos = document.createElement("div");
+                        costos.textContent = "$Costo: " + obj.costo + ", $Precio: " + obj.precio;
+                    
+                        const itbis = document.createElement("div");
+                        itbis.textContent = "$Paga Itbis: " + (obj.pagaItbis ? "Sí" : "No") + ", ITBIS: " + obj.itbis;
+
+                        const botones = document.createElement("div");
+                        botones.classList.add("btn-group");
+
+
+                        const editDeleteLink = document.createElement("button");
+                        editDeleteLink.productId = obj.id;
+                        editDeleteLink.classList.add("deleteProduct","btn", "btn-danger", "mt-10");
+                        editDeleteLink.textContent = "Eliminar";
+                        editDeleteLink.addEventListener('click', function() {
+                            const productId = this.productId;
+                            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                                fetch(`http://127.0.0.1/uasd/prog/index.php?action=deleteProduct&id=${productId}`, {
+                                    method: 'DELETE'
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if(data.success) {
+                                        alert('Producto eliminado exitosamente');
+                                        this.closest('.card').remove(); // Remove the card from the DOM
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                            }
+                        });
+                        botones.appendChild(editDeleteLink);
+
+                        const btnAction = document.createElement("div");
+                        btnAction.classList.add("btn-action");
+
+                        const editLink = document.createElement("a");
+                        editLink.addEventListener('click', function() {
+                            localStorage.setItem('productToEdit', JSON.stringify(obj));
+                        });
+                        editLink.href = "http://127.0.0.1/uasd/prog/public/addProducto.html";
+                        editLink.classList.add("btn", "btn-primary", "mt-10");                        
+                        editLink.textContent = "Editar";
+                        btnAction.appendChild(editLink);
+                        botones.appendChild(btnAction);
+                        
+                        cardContent.appendChild(h2);
+                        cardContent.appendChild(b);
+                        cardContent.appendChild(p);
+                        cardContent.appendChild(costos);
+                        cardContent.appendChild(itbis);
+                        cardContent.appendChild(botones); 
+
+                        card.appendChild(img);
+                        card.appendChild(cardContent);
+
+                        listProducts.appendChild(card);
+                    });                                
+                });              
+            });
+        </script> 
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <img src="img/logo.png" width="auto" height="45" alt="Logo de la página">
+            </div>  
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="about.html">Acerca de</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                    <li><a class="active" href="portafolio.html">Portafolio</a></li>
+                </ul>
+            </nav>
+            <nav class="login">
+                <ul>
+                    <li class="login-link"><img src="img/persona.png" alt="Iniciar sesión"></li>
+                    <li class="login-link-text"><a href="login.html">Iniciar sesión</a></li>
+                    <li><a href="register.html">Registrarse</a></li>
+                </ul>
+            </nav>
+        </header> 
+        <div class="banner">
+            <img src="img/banner.png" width="100%" height="400" alt="Banner de la página">
+        </div>
+        <div class="content">
+            <div class="content-full-left-right">
+                <h1>Nuestro Portafolio de producto</h1>
+                <div><a href="http://127.0.0.1/uasd/prog/public/addProducto.html">Agregar Producto</a></div>
+            </div>  
+            <div id="listProducts" class="list">               
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2026 Mi página. Todos los derechos reservados.</p>
+        </footer>
+    </body>
+</html>
