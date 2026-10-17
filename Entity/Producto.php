@@ -10,4 +10,14 @@ class Producto extends Entity{
     public $precio;
     public $pagaItbis;
     public $itbis;
+
+    public function getTable() : string{
+        return "producto";
+    }
+
+    function __construct($id = null){
+        if($id !== null){
+            $this->getById($id);
+        }
+    }
 }
