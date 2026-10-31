@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementsByTagName("form")[0];
         const producto = Object.fromEntries(new FormData(form).entries());
 
-        fetch('http://127.0.0.1/uasd/prog/index.php?action=saveProduct', {
+        fetch('http://api.proyecto.com/product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if(data.success) {
                 alert('Producto agregado exitosamente');
             }
-            document.location = "http://127.0.0.1/uasd/prog/public/portafolio.html";
+            document.location = "http://proyecto.com/portafolio.html";
         })
         .catch(error => {
             console.error('Error:', error);

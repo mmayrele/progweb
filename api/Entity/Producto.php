@@ -1,0 +1,24 @@
+<?php
+include_once "Entity.php";
+
+class Producto extends Entity{
+    public $id;    
+    public $proveedorid;
+    public $nombre;
+    public $codigo;
+    public $tipo;
+    public $costo;
+    public $precio;
+    public $pagaItbis;
+    public $itbis;
+
+    public function getTable() : string{
+        return "producto";
+    }
+
+    function __construct($id = null){
+        if($id !== null){
+            $this->getById($id);
+        }
+    }
+}

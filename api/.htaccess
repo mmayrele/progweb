@@ -1,0 +1,10 @@
+rewriteengine on 
+RewriteRule ^(.*)$ - 
+rewritecond %{request_uri} ^(.*)$
+rewritecond %{request_filename} !-f
+rewritecond %{request_uri} !\.(css|gif|ico|jpg|js|png)$
+rewriterule ^(.+)/?$ index.php?request=$1
+ 
+errordocument 403: "no tiene permisos para acceder"
+errordocument 404: "la pagina que ha solicitado no existe"
+errordocument 500: "la pagina presenta error de acceso"

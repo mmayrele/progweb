@@ -1,18 +1,14 @@
 <?php
 include_once "Entity.php";
 
-class Producto extends Entity{
+class Proveedor extends Entity{
     public $id;    
     public $nombre;
     public $codigo;
     public $tipo;
-    public $costo;
-    public $precio;
-    public $pagaItbis;
-    public $itbis;
 
     public function getTable() : string{
-        return "producto";
+        return "proveedor";
     }
 
     function __construct($id = null){

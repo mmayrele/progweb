@@ -1,9 +1,30 @@
 <?php
-include "config.php";
-include "Entity/Producto.php";
+//API SYSTEM
 
 define('STARTAPP', true);
-session_start();
+
+header("Access-Control-Allow-Origin: http://proyecto.com");
+header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
+
+include "config.php";
+
+include "lib.php";
+
+include "router.php";
+$router = new router();
+$router->start();
+
+exit;
+
+
+
+
+
+
+//include "Entity/Producto.php";
+
+
+
 
 if (isset($_GET["action"])) {
     header("Content-Type: application/json");

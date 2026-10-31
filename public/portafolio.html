@@ -10,7 +10,7 @@
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function() { 
                 //buscar productso
-                fetch("http://127.0.0.1/uasd/prog/index.php?action=getProducts")
+                fetch("http://api.proyecto.com/product/getAll")
                 .then(res => res.json())
                 .then(objs => {
                     //console.table(objs);
@@ -52,7 +52,7 @@
                         editDeleteLink.addEventListener('click', function() {
                             const productId = this.productId;
                             if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                                fetch(`http://127.0.0.1/uasd/prog/index.php?action=deleteProduct&id=${productId}`, {
+                                fetch(`http://api.proyecto.com/${productId}`, {
                                     method: 'DELETE'
                                 })
                                 .then(response => response.json())
@@ -76,7 +76,7 @@
                         editLink.addEventListener('click', function() {
                             localStorage.setItem('productToEdit', JSON.stringify(obj));
                         });
-                        editLink.href = "http://127.0.0.1/uasd/prog/public/addProducto.html";
+                        editLink.href = "http://proyecto.com/addProducto.html";
                         editLink.classList.add("btn", "btn-primary", "mt-10");                        
                         editLink.textContent = "Editar";
                         btnAction.appendChild(editLink);
@@ -125,7 +125,7 @@
         <div class="content">
             <div class="content-full-left-right">
                 <h1>Nuestro Portafolio de producto</h1>
-                <div><a href="http://127.0.0.1/uasd/prog/public/addProducto.html">Agregar Producto</a></div>
+                <div><a href="http://proyecto.com/addProducto.html">Agregar Producto</a></div>
             </div>  
             <div id="listProducts" class="list">               
             </div>
